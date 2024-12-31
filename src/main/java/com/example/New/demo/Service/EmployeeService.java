@@ -1,5 +1,6 @@
 package com.example.New.demo.Service;
 
+import com.example.New.demo.Model.Department;
 import com.example.New.demo.Model.Employee;
 import com.example.New.demo.Reository.EmployeeRepo;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,8 +28,14 @@ public class EmployeeService {
         return employeeRepo.save(emp);
     }
 
-    public Employee update(Employee emp) {
-        return employeeRepo.save(emp);
+
+    public Employee update(Employee emp){
+
+        Employee current= employeeRepo.findById(emp.getId()).orElseThrow();
+        current.setName(emp.getName());
+        current.setSalary(emp.getSalary());
+        current.setDepartment(emp.getDepartment());
+        return employeeRepo.save(current);
     }
 
     public void Delete(Long id) {
@@ -59,5 +66,12 @@ public class EmployeeService {
         //return  new ResponseEntity(employeeRepo.findById(id).get(), HttpStatus.OK);
         // second way
         //return ResponseEntity.ok(employeeRepo.findById(id));
+    }
+
+
+    public List<Employee> findByDepartmentId(Long deptid) {
+
+        return employeeRepo.findByDepartmentId(deptid);
+
     }
 }

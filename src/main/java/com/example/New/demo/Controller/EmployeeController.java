@@ -56,8 +56,9 @@ public class EmployeeController {
 
 
     @PostMapping("/post")
-    public Employee insert(@RequestBody Employee emp) {
-        return employeeService.insert(emp);
+    public Long insert(@RequestBody Employee emp) {
+        Employee inserted= employeeService.insert(emp);
+        return inserted.getId();
     }
 
 
@@ -71,6 +72,12 @@ public class EmployeeController {
     public void Delete(@PathVariable Long id) {
 
         employeeService.Delete(id);
+    }
+
+
+    @GetMapping("/department/{deptid}")
+    public List<Employee> findByDepartment(@PathVariable Long deptid){
+        return employeeService.findByDepartmentId(deptid);
     }
 
 
