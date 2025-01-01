@@ -40,10 +40,7 @@ public class DepartmentService {
     }
 
 
-//
-//   public org.hibernate.mapping.List<Employee> findByDepartmentId(Long deptid){
-//        return departmentRepo.findByDepartmentId(deptid);
-//    }
+
 
 
 }

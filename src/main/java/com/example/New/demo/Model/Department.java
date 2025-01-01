@@ -5,16 +5,22 @@ import jakarta.persistence.*;
 import java.util.List;
 
 @Entity
+@Table(name="department")
 public class Department {
+
+    public List<Employee> getEmployes() {
+        return employes;
+    }
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-
-    @OneToMany(mappedBy = "department")
-    private List<Employee> employees;
-
     private Long id;
     private String name;
+
+//    , cascade = CascadeType.ALL, fetch = FetchType.EAGER
+
+    @OneToMany(mappedBy = "department")
+    private List<Employee> employes;
 
     public void setId(Long id) {
         this.id = id;

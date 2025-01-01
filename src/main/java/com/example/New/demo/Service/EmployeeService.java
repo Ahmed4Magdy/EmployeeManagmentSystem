@@ -74,4 +74,16 @@ public class EmployeeService {
         return employeeRepo.findByDepartmentId(deptid);
 
     }
+
+
+   public List<Employee> findByDepartmentName(String deptname){
+
+        return employeeRepo.findByDepartmentName(deptname);
+
+   }
+
+
+
+
+
 }

@@ -1,6 +1,7 @@
 package com.example.New.demo.Controller;
 
 
+import com.example.New.demo.Model.Department;
 import com.example.New.demo.Model.Employee;
 import com.example.New.demo.Reository.EmployeeRepo;
 import com.example.New.demo.Service.EmployeeService;
@@ -40,7 +41,6 @@ public class EmployeeController {
 
 
     @GetMapping("")
-
     public Iterable<Employee> findetails() {
         return employeeService.findetails();
 
@@ -48,7 +48,6 @@ public class EmployeeController {
 
 
     @GetMapping("/filter/")
-
     public List<Employee> findnameandid(@RequestParam Long id, @RequestParam String name) {
 
         return employeeService.findByIdAndName(id, name);
@@ -79,6 +78,17 @@ public class EmployeeController {
     public List<Employee> findByDepartment(@PathVariable Long deptid){
         return employeeService.findByDepartmentId(deptid);
     }
+
+
+  @GetMapping("/department/name/{deptname}")
+    public List<Employee> findByDepartmentName(@PathVariable String deptname){
+
+        return employeeService.findByDepartmentName(deptname);
+
+    }
+
+
+
 
 
 }

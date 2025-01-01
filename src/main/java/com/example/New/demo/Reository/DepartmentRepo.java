@@ -12,5 +12,8 @@ import java.util.List;
 public interface DepartmentRepo extends JpaRepository<Department, Long> {
 
 
+//      Department findByDepartmentName(String name);
+
+
 
 }

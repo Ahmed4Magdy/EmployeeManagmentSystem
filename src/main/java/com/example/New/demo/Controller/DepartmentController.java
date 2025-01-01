@@ -16,33 +16,36 @@ public class DepartmentController {
     @Autowired
     private DepartmentService departmentService;
 
-    @GetMapping("/{id}")
-    public Department FindByid(@PathVariable Long id){
-
-        return departmentService.FindByid(id);
-    }
-
-
+//    @GetMapping("/{id}")
+//    public Department FindByid(@PathVariable Long id){
+//
+//        return departmentService.FindByid(id);
+//    }
 
 
-@PostMapping("/post")
-    public Department insert(@RequestBody  Department dept){
+    @PostMapping("/post")
+    public Department insert(@RequestBody Department dept) {
         return departmentService.insert(dept);
     }
 
-@PutMapping()
-    public Department update(@RequestBody Department dept){
+    @PutMapping()
+    public Department update(@RequestBody Department dept) {
 
         return departmentService.update(dept);
     }
 
-@GetMapping("")
+    @GetMapping("")
     public List<Department> details() {
         return departmentService.details();
     }
 
 
-
+    @GetMapping("/{id}")
+    public Department FindByid(@PathVariable Long id) {
+        Department department = departmentService.FindByid(id);
+        department.getEmployes().size();  //       (lazy loading)
+        return department;
+    }
 
 
 
