@@ -1,38 +1,22 @@
-package com.example.New.demo.Model;
+package com.example.New.demo.DTO;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.example.New.demo.Model.Department;
+import com.example.New.demo.Model.User;
 import jakarta.persistence.*;
 
-@Table(name = "employee")
-@Entity
-@NamedQuery(name = "Employee.findBySalary", query = "select emp from Employee emp where emp.salary>=:salary")
+public class EmployeeResponse {
 
-
-@NamedNativeQuery(name = "Employee.findByDepartment", query = "select *from employee where department_id=:deptid")
-public class Employee {
-
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
 
     private Long id;
     private String name;
     private double salary;
 
 
-    @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
-    @JoinColumn(name = "depatment_id", referencedColumnName = "id")
-//    @JsonIgnore
     private Department department;
 
 
-    @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
-    @JoinColumn(name = "user_id", referencedColumnName = "id")
     private User user;
 
-
-    public User getUser() {
-        return user;
-    }
 
     public Department getDepartment() {
         return department;
@@ -62,6 +46,10 @@ public class Employee {
         this.user = user;
     }
 
+    public User getUser() {
+        return user;
+    }
+
     public String getName() {
         return name;
     }
@@ -70,3 +58,6 @@ public class Employee {
         return salary;
     }
 }
+
+
+

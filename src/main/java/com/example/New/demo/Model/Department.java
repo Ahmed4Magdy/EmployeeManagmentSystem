@@ -1,26 +1,31 @@
 package com.example.New.demo.Model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 
 import java.util.List;
 
 @Entity
-@Table(name="department")
+@Table(name = "department")
 public class Department {
 
-    public List<Employee> getEmployes() {
-        return employes;
-    }
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String name;
 
-//    , cascade = CascadeType.ALL, fetch = FetchType.EAGER
 
-    @OneToMany(mappedBy = "department")
-    private List<Employee> employes;
+//    @OneToMany(mappedBy = "department",fetch = FetchType.LAZY)
+//    @JsonIgnore
+//    private List<Employee> employes;
+
+
+//        public List<Employee> getEmployes() {
+//        return employes;
+//    }
+
+
 
     public void setId(Long id) {
         this.id = id;

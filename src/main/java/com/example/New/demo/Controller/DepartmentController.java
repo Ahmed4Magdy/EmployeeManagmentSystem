@@ -40,12 +40,12 @@ public class DepartmentController {
     }
 
 
-    @GetMapping("/{id}")
-    public Department FindByid(@PathVariable Long id) {
-        Department department = departmentService.FindByid(id);
-        department.getEmployes().size();  //       (lazy loading)
-        return department;
-    }
+//    @GetMapping("/{id}")
+//    public Department FindByid(@PathVariable Long id) {
+//        Department department = departmentService.FindByid(id);
+//        department.getEmployes().size();  //       (lazy loading)
+//        return department;
+//    }
 
 
 
