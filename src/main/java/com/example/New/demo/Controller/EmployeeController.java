@@ -4,9 +4,11 @@ import com.example.New.demo.DTO.EmployeeResponse;
 import com.example.New.demo.HRstaticsProjection;
 import com.example.New.demo.Model.Department;
 import com.example.New.demo.Model.Employee;
+import com.example.New.demo.Projection.EmployeeProjection;
 import com.example.New.demo.Reository.EmployeeRepo;
 import com.example.New.demo.Service.EmployeeService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.repository.query.Param;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -48,8 +50,7 @@ public class EmployeeController {
 
         EmployeeResponse Empreponse = new EmployeeResponse();
         Empreponse.setId(e.getId());
-        Empreponse.setName(e.getName());
-        Empreponse.setSalary(e.getSalary());
+        Empreponse.setName(e.getFirstname());
         Empreponse.setDepartment(e.getDepartment());
         Empreponse.setUser(e.getUser());
         return Empreponse;
@@ -63,11 +64,12 @@ public class EmployeeController {
     }
 
 
-    @GetMapping("/filter/")
-    public List<Employee> findnameandid(@RequestParam Long id, @RequestParam String name) {
+//    @GetMapping("/filter/")
+//    public List<Employee> findnameandid(@RequestParam Long id, @RequestParam String name) {
+//
+//        return employeeService.findByIdAndName(id, name);
+//    }
 
-        return employeeService.findByIdAndName(id, name);
-    }
 
 
     @PostMapping("/post")
@@ -90,10 +92,10 @@ public class EmployeeController {
     }
 
 
-//    @GetMapping("/department/{deptid}")
-//    public List<Employee> findByDepartment(@PathVariable Long deptid) {
-//        return employeeService.findByDepartmentId(deptid);
-//    }
+    @GetMapping("/department/{deptid}")
+    public List<Employee> findByDepartment(@PathVariable Long deptid) {
+        return employeeService.findByDepartmentId(deptid);
+    }
 
 
     @GetMapping("/department/name/{deptname}")
@@ -125,17 +127,17 @@ public class EmployeeController {
     }
 
 
-    @GetMapping("/")
-    public ResponseEntity<?> findBySalary(@RequestParam Double salary) {
+//    @GetMapping("/")
+//    public ResponseEntity<?> findBySalary(@RequestParam Double salary) {
+//
+//        return ResponseEntity.ok(employeeService.findBySalary(salary));
+//    }
 
-        return ResponseEntity.ok(employeeService.findBySalary(salary));
-    }
-
-
-    @GetMapping("/deptid")
-    public List<Employee> findByDepartment(@RequestParam Long deptid) {
-        return employeeService.findByDepartmentId(deptid);
-    }
+//
+//    @GetMapping("/deptid")
+//    public List<Employee> findByDepartment(@RequestParam Long deptid) {
+//        return employeeService.findByDepartmentId(deptid);
+//    }
 
     @GetMapping("/{name}")
     public List<Employee> findByName(@PathVariable String name) {
@@ -145,6 +147,12 @@ public class EmployeeController {
     @GetMapping("/statics")
     public HRstaticsProjection getHRStatics(){
         return employeeService.getHRStatics();
+    }
+
+
+    @GetMapping("/filter/")
+    public ResponseEntity<?> filter(@RequestParam String first_name, @RequestParam int pagenum, @RequestParam int pagesize, @RequestParam Boolean isAsc, @RequestParam String sortcol) {
+        return  ResponseEntity.ok(employeeService.filter(first_name,pagenum,pagesize,isAsc,sortcol));
     }
 
 

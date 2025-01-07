@@ -3,9 +3,15 @@ package com.example.New.demo.Service;
 import com.example.New.demo.HRstaticsProjection;
 import com.example.New.demo.Model.Department;
 import com.example.New.demo.Model.Employee;
+import com.example.New.demo.Projection.EmployeeProjection;
 import com.example.New.demo.Reository.EmployeeRepo;
 import com.example.New.demo.Reository.UserReo;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
+import org.springframework.data.repository.query.Param;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -13,6 +19,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 
 import javax.transaction.Transactional;
+import java.util.Collections;
 import java.util.List;
 
 @Service
@@ -38,8 +45,9 @@ public class EmployeeService {
     public Employee update(Employee emp) {
 
         Employee current = employeeRepo.findById(emp.getId()).orElseThrow();
-        current.setName(emp.getName());
-        current.setSalary(emp.getSalary());
+        current.setFirstname(emp.getFirstname());
+        current.setLastname(emp.getLastname());
+        current.setLast_update(emp.getLast_update());
         current.setDepartment(emp.getDepartment());
         return employeeRepo.save(current);
     }
@@ -55,11 +63,11 @@ public class EmployeeService {
     }
 
     public List<Employee> findByName(String name) {
-        return employeeRepo.findByName(name);
+        return employeeRepo.findByFirstname(name);
     }
 
     public List<Employee> findByIdAndName(Long id, String name) {
-        return employeeRepo.findByIdAndName(id, name);
+        return employeeRepo.findByIdAndFirstname(id, name);
     }
 
 
@@ -89,36 +97,48 @@ public class EmployeeService {
 
     public List<Employee> findByNameAndDepartment(String empname, String deptname) {
 
-        return employeeRepo.findByNameContainingAndDepartmentNameContaining(empname, deptname);
+        return employeeRepo.findByFirstnameContainingAndDepartmentNameContaining(empname, deptname);
     }
 
     public Long countNameAndDepartmentName(String empname, String deptname) {
 
-        return employeeRepo.countByNameContainingAndDepartmentNameContaining(empname, deptname);
+        return employeeRepo.countByFirstnameContainingAndDepartmentNameContaining(empname, deptname);
 
     }
 
-@Transactional
+    @Transactional
     public Long deleteByNameContainingAndDepartmentNameContaining(String empname, String deptname) {
 
-        return employeeRepo.deleteByNameContainingAndDepartmentNameContaining(empname, deptname);
+        return employeeRepo.deleteByFirstnameContainingAndDepartmentNameContaining(empname, deptname);
     }
 
 
-    public List<Employee> findBySalary(Double salary){
+//    public List<Employee> findBySalary(Double salary){
+//
+//        return employeeRepo.findBySalary(salary);
+//    }
 
-        return employeeRepo.findBySalary(salary);
-    }
-
-   public  List<Employee> findByDepartment(Long id){
-        return employeeRepo.findByDepartment(id);
-    }
+//   public  List<Employee> findByDepartment(Long id){
+//        return employeeRepo.findByDepartment(id);
+//    }
 
 
-  public  HRstaticsProjection getHRStatics(){
+    public HRstaticsProjection getHRStatics() {
         return employeeRepo.getHRStatics();
-  }
+    }
 
+
+    public Page<EmployeeProjection> filter(@Param("first_name") String first_name, int pagenum, int pagesize, Boolean isAsc, String sortcol) {
+        if (first_name == null || first_name.isEmpty() || first_name.isBlank()) {
+//            return Collections.emptyList();
+            first_name = null;
+        }
+
+        Pageable page = PageRequest.of(pagenum,pagesize,isAsc? Sort.Direction.ASC: Sort.Direction.DESC,sortcol);
+        return employeeRepo.filter(first_name,page);
+
+
+    }
 
 
 }

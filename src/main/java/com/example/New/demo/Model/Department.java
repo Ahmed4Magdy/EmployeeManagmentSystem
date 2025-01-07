@@ -16,9 +16,9 @@ public class Department {
     private String name;
 
 
-//    @OneToMany(mappedBy = "department",fetch = FetchType.LAZY)
+    @OneToMany(mappedBy = "department")
 //    @JsonIgnore
-//    private List<Employee> employes;
+    private List<Employee> employes;
 
 
 //        public List<Employee> getEmployes() {
